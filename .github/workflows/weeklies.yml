@@ -37,7 +37,7 @@ jobs:
             qw/progs/w_rock.mdl
             qw/progs/w_shot2.mdl
             qw/progs/w_shot.mdl
-          key: static-key-2
+          key: static-key-3
 
       - name: Install packages
         run: sudo apt-get -qq install expect unzip lhasa
@@ -54,7 +54,7 @@ jobs:
           lha x resource.1 id1/pak0.pak
 
           mkdir -p qw/maps
-          curl -s -o qw/maps/maphub_v1.bsp http://maps.quakeworld.nu/maphub_v1.bsp
+          curl -s -o qw/maps/maphub_v1.bsp https://maps.quakeworld.nu/base/maphub_v1.bsp
 
           curl -s -o vwep.zip -L https://gfx.quakeworld.nu/download/238/trickles-vwep-package/
           unzip vwep.zip "qw/progs/*"
