@@ -64,7 +64,7 @@ jobs:
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
 
       - name: Fetch demos
-        run: expect -d ./fetch-demos
+        run: expect ./fetch-demos
 
       - name: Filter unfinished matches
         run: |

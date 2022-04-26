@@ -24,11 +24,15 @@ expect {
 
 expect -re {.+space available: [0-9.]+MB\r\n}
 
-foreach demo $demos {
-    send -- "cmd dl $demo\r\n"
-    expect -re {.+Download.+completed.+}
-    sleep 1
-}
+#foreach demo $demos {
+#    send -- "cmd dl $demo\r\n"
+#    expect -re {.+Download.+completed.+}
+#    sleep 1
+#}
+
+send -- "cmd dl 2714\r\n"
+expect -re {.+Download.+completed.+}
+sleep 1
 
 send -- "disconnect\n"
 sleep 1
