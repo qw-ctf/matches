@@ -30,4 +30,4 @@ jobs:
         run: sudo apt-get -qq install expect
 
       - name: Fetch demos
-        run: ./fetch-demos
+        run: expect -d ./fetch-demos
