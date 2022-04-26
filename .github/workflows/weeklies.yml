@@ -18,11 +18,26 @@ jobs:
         id: cache-dependencies
         with:
           path: |
-            /usr/bin/fteqw
+            fteqw
             id1/pak0.pak
-            id1/maps/maphub_v1.bsp
-            
-          key: static-key-1
+            qw/maps/maphub_v1.bsp
+            qw/progs/end2.mdl
+            qw/progs/end3.mdl
+            qw/progs/end4.mdl
+            qw/progs/spawn.mdl
+            qw/progs/v_coil.mdl
+            qw/progs/v_spike.mdl
+            qw/progs/vwplayer.mdl
+            qw/progs/w_axe.mdl
+            qw/progs/w_coil.mdl
+            qw/progs/w_light.mdl
+            qw/progs/w_nail2.mdl
+            qw/progs/w_nail.mdl
+            qw/progs/w_rock2.mdl
+            qw/progs/w_rock.mdl
+            qw/progs/w_shot2.mdl
+            qw/progs/w_shot.mdl
+          key: static-key-2
 
       - name: Install packages
         run: sudo apt-get -qq install expect unzip lhasa
@@ -31,18 +46,20 @@ jobs:
         run: |
           curl -s -o fteqw https://fte.triptohell.info/moodles/linux_amd64/fteqw64
           chmod 755 fteqw
-          sudo mv fteqw /usr/bin/
 
-          mkdir tmp && pushd tmp
-          curl -O https://www.gamers.org/pub/idgames2/idstuff/quake/quake106.zip
+          curl -s -O https://www.gamers.org/pub/idgames2/idstuff/quake/quake106.zip
           unzip quake106.zip resource.1
           lha x resource.1 id1/pak0.pak
-          mv id1 ..
-          popd
 
-          mkdir -p id1/maps && pushd id1/maps
-          curl -O http://maps.quakeworld.nu/maphub_v1.bsp
-          popd
+          mkdir -p qw/maps
+          curl -s -o qw/maps/maphub_v1.bsp http://maps.quakeworld.nu/maphub_v1.bsp
+
+          curl -s -o vwep.zip -L https://gfx.quakeworld.nu/download/238/trickles-vwep-package/
+          unzip vwep.zip "qw/progs/*"
+
+          curl -s -o vwplayer.zip https://gfx.quakeworld.nu/download/312/vwplayermdl-vwep-prerequisity/
+          unzip -d qw/progs vwplayer.zip
+          
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
 
       - name: bleh

@@ -3,7 +3,7 @@
 set timeout 500
 set demos [list]
 
-spawn fteqw +snd_device none +vid_renderer headless +name "demodude" +spectator 1 +rate 50000 +drate 300000 +connect london.badplace.eu:28503
+spawn ./fteqw +snd_device none +vid_renderer headless +name "demodude" +spectator 1 +rate 50000 +drate 300000 +connect london.badplace.eu:28503
 
 expect {Commands loaded}
 
