@@ -13,13 +13,14 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Cache Gradle packages
+      - name: Cache FTEQW Client
         uses: actions/cache@v3
         id: cache-fteqw
         with:
           path: /usr/bin/fteqw
+          key: fteqw
 
-      - name: "Fetch FTEQW"
+      - name: Fetch FTEQW
         run: |
           curl -q -o fteqw https://fte.triptohell.info/moodles/linux_amd64/fteqw64
           chmod 755 fteqw
