@@ -13,6 +13,18 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        id: cache-fteqw
+        with:
+          path: /usr/bin/fteqw
+
+      - name: "Fetch FTEQW"
+        run: |
+          curl -q -o fteqw https://fte.triptohell.info/moodles/linux_amd64/fteqw64
+          chmod 755 fteqw
+          sudo mv fteqw /usr/bin/
+
       - name: Install Expect
         run: sudo apt-get install -y expect
 
