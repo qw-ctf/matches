@@ -70,13 +70,13 @@ jobs:
         run: |
           curl -O https://raw.githubusercontent.com/qw-ctf/ktx-stats/master/ktx-stats.py
 
-          for demo in qw/demos/*.mvd; do
+          for demo in $(find qw/demos -name '*.mvd' 2>/dev/null); do
             python ktx-stats.py "${demo}"
             
             duration=$(jq '.duration' "${demo/mvd/json}")
             if ! ((${duration} % 60)); then
               gzip -9 "${demo}"
-              mv "${demo}.gz" weeklies
+              mv "${demo}.gz" weeklies/
             else
               echo "${duration}" > ignored/$(basename $demo).ignored
             fi
