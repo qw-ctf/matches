@@ -86,11 +86,12 @@ jobs:
         id: push-changes
         run: |
           git config --global user.name 'Demo Fetcher'
-          git config --global user.email dsvensson@users.noreply.github.com'
+          git config --global user.email 'dsvensson@users.noreply.github.com'
+          git add ignored weeklies
           if git commit -am "Weekly demos"; then
-            HASH=$(git rev-parse --verify HEAD)
-            git push -f "${HASH}:refs/heads/weekly-demos"
-            echo "::set-output name=commithash::$HASH"
+            hash=$(git rev-parse --verify HEAD)
+            git push -f "${hash}:refs/heads/weekly-demos"
+            echo "::set-output name=commithash::$hash"
           fi
 
       - name: Create Pull Request
