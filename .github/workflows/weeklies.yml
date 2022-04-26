@@ -15,24 +15,41 @@ jobs:
 
       - name: Cache FTEQW Client
         uses: actions/cache@v3
-        id: cache-fteqw
+        id: cache-dependencies
         with:
           path: |
             /usr/bin/fteqw
-            qw/maps/maphub_v1.bsp
-          key: static-key
+            id1/pak0.pak
+            id1/maps/maphub_v1.bsp
+            
+          key: static-key-1
 
-      - name: Fetch FTEQW
+      - name: Install packages
+        run: sudo apt-get -qq install expect unzip lha
+
+      - name: Fetch dependencies
         run: |
           curl -s -o fteqw https://fte.triptohell.info/moodles/linux_amd64/fteqw64
           chmod 755 fteqw
           sudo mv fteqw /usr/bin/
 
+          mkdir tmp && pushd tmp
+          curl -O https://www.gamers.org/pub/idgames2/idstuff/quake/quake106.zip
+          unzip quake106.zip resource.1
+          lha x resource.1 id1/pak0.pak
+          mv id1 ..
+          popd
+
+          mkdir -p id1/maps && pushd id1/maps
+          curl -O http://maps.quakeworld.nu/maphub_v1.bsp
+          popd
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+
       - name: bleh
         run: find .
 
-      - name: Install Expect
-        run: sudo apt-get -qq install expect
-
       - name: Fetch demos
         run: expect -d ./fetch-demos
+
+      - name: bleh 2
+        run: find .
