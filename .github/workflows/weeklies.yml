@@ -90,7 +90,7 @@ jobs:
           git add ignored weeklies
           if git commit -am "Weekly demos"; then
             hash=$(git rev-parse --verify HEAD)
-            git push -f "${hash}:refs/heads/weekly-demos"
+            git push -f origin "${hash}:refs/heads/weekly-demos"
             echo "::set-output name=commithash::$hash"
           fi
 
