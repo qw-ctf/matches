@@ -1,0 +1,35 @@
+#!/usr/bin/expect -d -f
+
+set timeout 500
+set demos [list]
+
+spawn fteqw +snd_device none +vid_renderer headless +name "[demodude]" +spectator 1 +drate 300000 +connect london.badplace.eu:28503
+
+expect {Commands loaded}
+
+send -- "cmd dlist ctf\r\n"
+
+expect {Listing content of ./ktx/demos/\\.mvd(\\.(gz|bz2|rar|zip))?\$}
+expect -re {\r\n}
+
+expect {
+    -re {\s*([0-9]+): ([^ ]+) \([^)]+\)\r\n} {
+        if {![file exists "qw/demos/$expect_out(2,string).gz"]} {
+            append demos " $expect_out(1,string)";
+        }
+        exp_continue
+    }
+    -re {\r\n}
+}
+
+expect -re {.+space available: [0-9.]+MB\r\n}
+
+#foreach demo $demos {
+#    send -- "cmd dl $demo\r\n"
+#    expect -re {.+Download.+completed.+}
+#    sleep 1
+#}
+
+send -- "disconnect\n"
+sleep 1
+send -- "quit\n"

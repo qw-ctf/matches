@@ -22,12 +22,12 @@ jobs:
 
       - name: Fetch FTEQW
         run: |
-          curl -q -o fteqw https://fte.triptohell.info/moodles/linux_amd64/fteqw64
+          curl -s -o fteqw https://fte.triptohell.info/moodles/linux_amd64/fteqw64
           chmod 755 fteqw
           sudo mv fteqw /usr/bin/
 
       - name: Install Expect
-        run: sudo apt-get install -y expect
+        run: sudo apt-get -qq install expect
 
-      - name: bleh
-        run: ls -lR
+      - name: Fetch demos
+        run: ./fetch-demos
