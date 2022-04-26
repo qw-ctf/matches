@@ -25,7 +25,7 @@ jobs:
           key: static-key-1
 
       - name: Install packages
-        run: sudo apt-get -qq install expect unzip lha
+        run: sudo apt-get -qq install expect unzip lhasa
 
       - name: Fetch dependencies
         run: |
